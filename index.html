@@ -4,87 +4,238 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Victoria Cake</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #fff8f4;
-      color: #333;
+    :root {
+      --primario: #f48fb1;
+      --secundario: #ce93d8;
+      --texto: #4a148c;
+      --fondo: #fff8f9;
+      --sombra: rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--fondo);
+      color: var(--texto);
+      scroll-behavior: smooth;
+      opacity: 0;
+      animation: fadeIn 1.4s ease-out forwards;
+      cursor: url('https://cdn-icons-png.flaticon.com/32/1784/1784121.png') 16 16, auto;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
     header {
-      text-align: center;
-      padding: 2rem;
-    }
-    .logo {
-      width: 120px;
-    }
-    h1 {
-      color: #7a2e85;
-    }
-    .btn {
-      background: #c481d3;
+      background: linear-gradient(135deg, var(--primario), var(--secundario));
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
+      text-align: center;
+      padding: 3.5rem 1rem 2.5rem;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 4px 20px var(--sombra);
+      position: relative;
+      overflow: hidden;
+      animation: slideDown 1s ease-out;
     }
-    .productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      animation: pulse 6s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+    }
+
+    header .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       gap: 1rem;
-      padding: 2rem;
+      flex-direction: column;
+      animation: zoomIn 1.2s ease-in-out forwards;
     }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .logo-container img {
+      width: 140px;
+      height: auto;
+      border-radius: 50%;
+      background-color: white;
+      padding: 0.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container img:hover {
+      transform: scale(1.1) rotate(-2deg);
+    }
+
+    .typing-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid rgba(255,255,255,0.75);
+      width: 0;
+      animation: typing 4s steps(50, end) forwards, blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .btn {
+      margin-top: 0.5rem;
+      background: white;
+      color: var(--texto);
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px var(--sombra);
+      transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #f8bbd0;
+      transform: scale(1.08);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
     .producto {
       background: white;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 24px;
+      overflow: hidden;
       text-align: center;
+      box-shadow: 0 12px 28px var(--sombra);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      animation: fadeUp 0.6s ease-out both;
+      cursor: pointer;
     }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .producto:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+    }
+
     .producto img {
-      max-width: 100%;
-      border-radius: 8px;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 3px solid #f3e5f5;
+      transition: transform 0.3s ease;
     }
+
+    .producto:hover img {
+      transform: scale(1.05);
+    }
+
+    .producto h3 {
+      margin: 1rem 0 0.5rem;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+    }
+
+    .producto p {
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      color: #6a1b9a;
+    }
+
     footer {
       text-align: center;
-      padding: 1rem;
-      background-color: #f0e6f5;
-      font-size: 14px;
+      padding: 2rem 1rem;
+      background-color: #f3e5f5;
+      font-size: 0.95rem;
+      color: var(--texto);
     }
   </style>
 </head>
 <body>
-
   <header>
-    <img src="https://i.imgur.com/0g3q9GJ.png" alt="Logo Victoria Cake" class="logo" />
-    <h1>Hechas con pasión. <br>Decoradas con amor.</h1>
-    <button class="btn">PEDIR</button>
+    <div class="logo-container">
+      <img src="logo.png" alt="Logo Victoria Cake" />
+      <div class="typing-text">Hechas con pasión. Decoradas con amor.</div>
+      <button class="btn" onclick="window.location.href='https://wa.me/573001112233'">PEDIR</button>
+    </div>
   </header>
 
-  <section class="productos">
+  <section class="catalogo">
     <div class="producto">
-      <img src="https://i.imgur.com/BzBFGNo.jpg" alt="Torta de Chocolate">
-      <h3>Torta de Chocolate</h3>
+      <img src="chocolate1.png" alt="Torta de Chocolate">
+      <h3>TORTA DE CHOCOLATE</h3>
       <p>12 porciones – $55.000</p>
     </div>
     <div class="producto">
-      <img src="https://i.imgur.com/tqPNTU5.jpg" alt="Cupcakes de Chocolate">
-      <h3>Cupcakes de Chocolate</h3>
+      <img src="cupcakes.png" alt="Cupcakes de Chocolate">
+      <h3>CUPCAKES DE CHOCOLATE</h3>
       <p>8 unidades – $42.000</p>
     </div>
     <div class="producto">
-      <img src="https://i.imgur.com/MvfbDJN.jpg" alt="Torta de Zanahoria">
-      <h3>Torta de Zanahoria</h3>
+      <img src="zanahoria.png" alt="Torta de Zanahoria">
+      <h3>TORTA DE ZANAHORIA</h3>
       <p>12 porciones – $45.000</p>
+    </div>
+    <div class="producto">
+      <img src="chocolate2.png" alt="Torta de Chocolate Fresa">
+      <h3>TORTA DE CHOCOLATE</h3>
+      <p>12 porciones – $77.000</p>
     </div>
   </section>
 
   <footer>
-    © 2025 Victoria Cake · Instagram: @victoriacake · WhatsApp: 123 456 7890
+    © 2025 Victoria Cake | Instagram: @victoriacake | WhatsApp: 123 456 7890
   </footer>
-
 </body>
 </html>
