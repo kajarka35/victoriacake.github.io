@@ -1,1 +1,0 @@
-Agrega aquí tus imágenes: logo.png, chocolate1.png, cupcakes.png, zanahoria.png, chocolate2.png
