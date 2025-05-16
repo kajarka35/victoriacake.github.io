@@ -30,9 +30,24 @@
       cursor: url('https://cdn-icons-png.flaticon.com/32/1784/1784121.png') 16 16, auto;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     header {
@@ -45,12 +60,11 @@
       box-shadow: 0 4px 20px var(--sombra);
       position: relative;
       overflow: hidden;
-      animation: slideDown 1s ease-out;
     }
 
-    @keyframes slideDown {
-      0% { opacity: 0; transform: translateY(-50px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.2); opacity: 0.3; }
     }
 
     header::after {
@@ -65,37 +79,27 @@
       animation: pulse 6s infinite ease-in-out;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.6; }
-      50% { transform: scale(1.2); opacity: 0.3; }
-    }
-
-    header .logo-container {
+    .logo-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
       flex-direction: column;
-      animation: zoomIn 1.2s ease-in-out forwards;
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      gap: 1rem;
     }
 
     .logo-container img {
       width: 140px;
-      height: auto;
       border-radius: 50%;
       background-color: white;
       padding: 0.5rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       transition: transform 0.3s ease;
+      animation: float 3s ease-in-out infinite;
     }
 
-    .logo-container img:hover {
-      transform: scale(1.1) rotate(-2deg);
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     .typing-text {
@@ -118,26 +122,6 @@
       50% { border-color: transparent; }
     }
 
-    .btn {
-      margin-top: 0.5rem;
-      background: white;
-      color: var(--texto);
-      padding: 0.75rem 2rem;
-      border: none;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 10px var(--sombra);
-      transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #f8bbd0;
-      transform: scale(1.08);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-    }
-
     .catalogo {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -155,13 +139,7 @@
       box-shadow: 0 12px 28px var(--sombra);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       position: relative;
-      animation: fadeUp 0.6s ease-out both;
-      cursor: pointer;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding-bottom: 2rem;
     }
 
     .producto:hover {
@@ -188,9 +166,37 @@
     }
 
     .producto p {
-      margin-bottom: 1.5rem;
       font-size: 1rem;
       color: #6a1b9a;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      background: linear-gradient(to right, #f8bbd0, #f48fb1);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #f48fb1, #f06292);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     footer {
@@ -200,50 +206,95 @@
       font-size: 0.95rem;
       color: var(--texto);
     }
+
+    @media (max-width: 480px) {
+      .logo-container img {
+        width: 90px;
+      }
+
+      .typing-text {
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      .btn img {
+        width: 16px;
+        height: 16px;
+      }
+
+      .catalogo {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+      }
+    }
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
 </head>
 <body>
-  <header>
+  <header class="animate-on-scroll">
     <div class="logo-container">
       <img src="logo.png" alt="Logo Victoria Cake" />
       <div class="typing-text">Hechas con pasión. Decoradas con amor.</div>
-      <button class="btn" onclick="window.location.href='https://wa.me/573001112233'">PEDIR</button>
     </div>
   </header>
 
-  <section class="catalogo animate-on-scroll">
-  <div class="producto animate-on-scroll">
-    <img src="chocolate1.png" alt="Torta de Chocolate">
-    <h3>TORTA DE CHOCOLATE</h3>
-    <p>12 porciones – $55.000</p>
-    <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20estoy%20interesado%20en%20la%20Torta%20de%20Chocolate%20de%2012%20porciones.%20¿Me%20das%20más%20información%3F'">PEDIR</button>
-  </div>
+  <section class="catalogo">
+    <div class="producto animate-on-scroll">
+      <img src="chocolate1.png" alt="Torta de Chocolate">
+      <h3>TORTA DE CHOCOLATE</h3>
+      <p>12 porciones – $55.000</p>
+      <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20estoy%20interesado%20en%20la%20Torta%20de%20Chocolate%20de%2012%20porciones.%20¿Me%20das%20más%20información%3F'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> PEDIR
+      </button>
+    </div>
 
-  <div class="producto animate-on-scroll">
-    <img src="cupcakes.png" alt="Cupcakes de Chocolate">
-    <h3>CUPCAKES DE CHOCOLATE</h3>
-    <p>8 unidades – $42.000</p>
-    <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20me%20interesan%20los%20Cupcakes%20de%20Chocolate%20(8%20unidades).%20¿Puedes%20contarme%20más%3F'">PEDIR</button>
-  </div>
+    <div class="producto animate-on-scroll">
+      <img src="cupcakes.png" alt="Cupcakes de Chocolate">
+      <h3>CUPCAKES DE CHOCOLATE</h3>
+      <p>8 unidades – $42.000</p>
+      <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20me%20interesan%20los%20Cupcakes%20de%20Chocolate%20(8%20unidades).%20¿Puedes%20contarme%20más%3F'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> PEDIR
+      </button>
+    </div>
 
-  <div class="producto animate-on-scroll">
-    <img src="zanahoria.png" alt="Torta de Zanahoria">
-    <h3>TORTA DE ZANAHORIA</h3>
-    <p>12 porciones – $45.000</p>
-    <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20quiero%20saber%20más%20sobre%20la%20Torta%20de%20Zanahoria%20de%2012%20porciones.%20¡Gracias!'">PEDIR</button>
-  </div>
+    <div class="producto animate-on-scroll">
+      <img src="zanahoria.png" alt="Torta de Zanahoria">
+      <h3>TORTA DE ZANAHORIA</h3>
+      <p>12 porciones – $45.000</p>
+      <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20quiero%20saber%20más%20sobre%20la%20Torta%20de%20Zanahoria%20de%2012%20porciones.%20¡Gracias!'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> PEDIR
+      </button>
+    </div>
 
-  <div class="producto animate-on-scroll">
-    <img src="chocolate2.png" alt="Torta de Chocolate Fresa">
-    <h3>TORTA DE CHOCOLATE</h3>
-    <p>12 porciones – $77.000</p>
-    <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20vi%20la%20Torta%20de%20Chocolate%20con%20Fresa%20en%20tu%20catálogo%20y%20quiero%20más%20información.%20Gracias!'">PEDIR</button>
-  </div>
-</section>
+    <div class="producto animate-on-scroll">
+      <img src="chocolate2.png" alt="Torta de Chocolate Fresa">
+      <h3>TORTA DE CHOCOLATE</h3>
+      <p>12 porciones – $77.000</p>
+      <button class="btn" onclick="window.location.href='https://wa.me/573216443795?text=Hola%2C%20vi%20la%20Torta%20de%20Chocolate%20con%20Fresa%20en%20tu%20catálogo%20y%20quiero%20más%20información.%20Gracias!'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> PEDIR
+      </button>
+    </div>
+  </section>
 
-
-  <footer>
-    © 2025 Victoria Cake | Instagram: @victoriacake | WhatsApp: 123 456 7890
+  <footer class="animate-on-scroll">
+    © 2025 Victoria Cake | Instagram: @victoriacake | WhatsApp: 321 644 3795
   </footer>
 </body>
 </html>
