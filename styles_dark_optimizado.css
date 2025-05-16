@@ -272,24 +272,56 @@ footer {
 /* Toggle theme */
 .theme-toggle-btn {
   position: fixed;
-  bottom: 160px;
-  right: 20px;
+  top: 1rem;
+  right: 1rem;
   background: var(--blanco);
+  color: var(--texto);
   border: none;
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
+  width: 44px;
+  height: 44px;
   font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  z-index: 999;
-  transition: all 0.3s ease;
+  z-index: 9999;
+  transition: transform 0.3s ease, background 0.3s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 .theme-toggle-btn:hover {
   transform: scale(1.1);
 }
 body.dark .theme-toggle-btn {
-  background: #2c2c2c;
+  background: #2a2a2a;
   color: #ffd1f3;
   box-shadow: 0 6px 12px rgba(255, 255, 255, 0.08);
 }
+@media (max-width: 480px) {
+  .theme-toggle-btn {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .typing-text {
+    white-space: normal;
+    overflow: hidden;
+    width: 100%;
+    max-width: 90vw;
+    font-size: 1.6rem;
+    text-align: center;
+    display: inline-block;
+    animation: typing-multi 4s steps(40, end) forwards, blink 0.7s step-end infinite;
+  }
+
+  @keyframes typing-multi {
+    from { max-width: 0; }
+    to { max-width: 100%; }
+  }
+}
+
