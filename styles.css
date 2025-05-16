@@ -236,17 +236,24 @@ footer {
 
 /* Ajustes para móviles */
 @media (max-width: 480px) {
-  .whatsapp-float {
-    width: 50px;
-    height: 50px;
-    bottom: 16px;
+  .scroll-top-btn {
+    bottom: 80px; /* aún más espacio en móviles */
     right: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .whatsapp-float {
+    bottom: 20px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
   }
 
   .whatsapp-float img {
-    width: 60%;
-    height: 60%;
+    width: 26px;
+    height: 26px;
   }
 }
 
@@ -265,7 +272,7 @@ footer {
 /* Botón scroll top */
 .scroll-top-btn {
   position: fixed;
-  bottom: 90px;
+  bottom: 90px; /* Suficiente separación del botón de WhatsApp */
   right: 20px;
   background: var(--primario);
   color: white;
