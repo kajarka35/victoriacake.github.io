@@ -213,7 +213,7 @@ footer {
   right: 20px;
   width: 55px;
   height: 55px;
-  background: white;
+  background: var(--blanco);
   border-radius: 50%;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -225,6 +225,41 @@ footer {
 
 .whatsapp-float:hover {
   transform: scale(1.1);
+}
+
+.whatsapp-float img {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+/* Ajustes para móviles */
+@media (max-width: 480px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 16px;
+    right: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  .whatsapp-float img {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+/* Modo oscuro: botón sigue siendo visible y armonioso */
+@media (prefers-color-scheme: dark) {
+  .whatsapp-float {
+    background: var(--blanco);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .whatsapp-float img {
+    filter: brightness(1.2) drop-shadow(0 0 2px rgba(255,255,255,0.3));
+  }
 }
 
 /* Botón scroll top */
