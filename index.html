@@ -30,9 +30,28 @@
       cursor: url('https://cdn-icons-png.flaticon.com/32/1784/1784121.png') 16 16, auto;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    header, .catalogo, footer {
+      will-change: transform, opacity;
     }
 
     header {
@@ -45,12 +64,6 @@
       box-shadow: 0 4px 20px var(--sombra);
       position: relative;
       overflow: hidden;
-      animation: slideDown 1s ease-out;
-    }
-
-    @keyframes slideDown {
-      0% { opacity: 0; transform: translateY(-50px); }
-      100% { opacity: 1; transform: translateY(0); }
     }
 
     header::after {
@@ -70,18 +83,12 @@
       50% { transform: scale(1.2); opacity: 0.3; }
     }
 
-    header .logo-container {
+    .logo-container {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 1rem;
       flex-direction: column;
-      animation: zoomIn 1.2s ease-in-out forwards;
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
     }
 
     .logo-container img {
@@ -132,14 +139,14 @@
       transition: transform 0.3s ease, background 0.3s, box-shadow 0.3s;
     }
 
-    .btn:active {
-      transform: scale(0.95);
-    }
-
     .btn:hover {
       background-color: #f8bbd0;
       transform: scale(1.08);
       box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
     }
 
     .catalogo {
@@ -159,14 +166,8 @@
       box-shadow: 0 12px 28px var(--sombra);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       position: relative;
-      animation: fadeUp 0.6s ease-out both;
       cursor: pointer;
       touch-action: manipulation;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .producto:hover {
@@ -208,8 +209,21 @@
     }
 
     @media (max-width: 480px) {
+      .animate-on-scroll {
+        transform: translateY(60px);
+      }
+
+      .logo-container img {
+        width: 90px;
+      }
+
       .typing-text {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+      }
+
+      .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.5rem;
       }
 
       .producto h3 {
@@ -220,20 +234,31 @@
         font-size: 0.95rem;
       }
 
-      .btn {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.5rem;
-      }
-
       .catalogo {
+        grid-template-columns: 1fr;
         padding: 2rem 1rem;
-        gap: 1.5rem;
       }
     }
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
 </head>
 <body>
-  <header>
+  <header class="animate-on-scroll">
     <div class="logo-container">
       <img src="logo.png" alt="Logo Victoria Cake" />
       <div class="typing-text">Hechas con pasión. Decoradas con amor.</div>
@@ -241,30 +266,30 @@
     </div>
   </header>
 
-  <section class="catalogo">
-    <div class="producto">
+  <section class="catalogo animate-on-scroll">
+    <div class="producto animate-on-scroll">
       <img src="chocolate1.png" alt="Torta de Chocolate">
       <h3>TORTA DE CHOCOLATE</h3>
       <p>12 porciones – $55.000</p>
     </div>
-    <div class="producto">
+    <div class="producto animate-on-scroll">
       <img src="cupcakes.png" alt="Cupcakes de Chocolate">
       <h3>CUPCAKES DE CHOCOLATE</h3>
       <p>8 unidades – $42.000</p>
     </div>
-    <div class="producto">
+    <div class="producto animate-on-scroll">
       <img src="zanahoria.png" alt="Torta de Zanahoria">
       <h3>TORTA DE ZANAHORIA</h3>
       <p>12 porciones – $45.000</p>
     </div>
-    <div class="producto">
+    <div class="producto animate-on-scroll">
       <img src="chocolate2.png" alt="Torta de Chocolate Fresa">
       <h3>TORTA DE CHOCOLATE</h3>
       <p>12 porciones – $77.000</p>
     </div>
   </section>
 
-  <footer>
+  <footer class="animate-on-scroll">
     © 2025 Victoria Cake | Instagram: @victoriacake | WhatsApp: 123 456 7890
   </footer>
 </body>
