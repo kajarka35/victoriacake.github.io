@@ -1,10 +1,10 @@
 // File: firebase-config.js
 export const firebaseConfig = {
-  apiKey: "AIzaSyAcvikj3kovixYo4IkOywGlmWqPE7zHsJQ",
-   authDomain: "victoriacake-ac574.firebaseapp.com",
-   projectId: "victoriacake-ac574",
-   storageBucket: "victoriacake-ac574.firebasestorage.app",
-   messagingSenderId: "958849252478",
-   appId: "1:958849252478:web:06b9529d92b85cf318ac2f",
-   measurementId: "G-3FCMNRL6X7"
+   apiKey: "AIzaSyBNfr9T0DHl6OO2ZJG-owjfw9JoPVESMu0",
+    authDomain: "victoriacake-f40de.firebaseapp.com",
+    projectId: "victoriacake-f40de",
+    storageBucket: "victoriacake-f40de.firebasestorage.app",
+    messagingSenderId: "922335091499",
+    appId: "1:922335091499:web:db79d2da1d4f67d39cc36e",
+    measurementId: "G-9Q07NFQB1Y"
 };
