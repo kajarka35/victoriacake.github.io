@@ -1,0 +1,419 @@
+:root {
+  --primario: #f48fb1;
+  --secundario: #ce93d8;
+  --texto: #4a148c;
+  --fondo: #fff8f9;
+  --blanco: #ffffff;
+  --sombra: 0 12px 28px rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-blur: blur(14px);
+  --borde-suave: rgba(255, 255, 255, 0.25);
+  --resaltado: #f06292;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #1e1e1e;
+    --texto: #fce4ec;
+    --blanco: #2a2a2a;
+    --glass-bg: rgba(35, 35, 35, 0.5);
+    --borde-suave: rgba(255, 255, 255, 0.05);
+    --sombra: 0 8px 24px rgba(255, 255, 255, 0.05);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background-color: var(--fondo);
+  color: var(--texto);
+  scroll-behavior: smooth;
+  animation: fadeIn 1s ease-out;
+  line-height: 1.6;
+}
+
+/* Animación inicial */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Aparecer en scroll */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+}
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--primario), var(--secundario));
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: var(--sombra);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Logo */
+.logo-container img {
+  width: 140px;
+  border-radius: 50%;
+  background: white;
+  padding: 0.5rem;
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* Animación de flotación */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Texto animado */
+.typing-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  margin-top: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid rgba(255,255,255,0.75);
+  width: 0;
+  animation: typing 4s steps(40, end) forwards, blink 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Catálogo */
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Tarjeta de producto */
+.producto {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: 20px;
+  border: 1px solid var(--borde-suave);
+  box-shadow: var(--sombra);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.producto::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(to right, #ffffff40, transparent);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  z-index: 1;
+}
+
+.producto img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.producto h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  z-index: 2;
+  position: relative;
+}
+
+.producto p {
+  font-size: 1rem;
+  color: #6a1b9a;
+  z-index: 2;
+  position: relative;
+}
+
+.producto:hover {
+  transform: scale(1.03);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+}
+
+.producto:hover img {
+  transform: scale(1.05) rotate(-1deg);
+}
+
+/* Botón */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, #f8bbd0, var(--primario));
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  box-shadow: 0 4px 14px rgba(244, 143, 177, 0.4);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+}
+.btn:hover,
+.btn:focus-visible {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 22px rgba(244, 143, 177, 0.5);
+  outline: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background-color: #f3e5f5;
+  color: var(--texto);
+  font-size: 0.95rem;
+}
+
+/* WhatsApp flotante */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background: var(--blanco);
+  border-radius: 50%;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+
+.whatsapp-float img {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+/* Ajustes para móviles */
+@media (max-width: 480px) {
+  .scroll-top-btn {
+    bottom: 80px; /* aún más espacio en móviles */
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .whatsapp-float {
+    bottom: 20px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .whatsapp-float img {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Modo oscuro: botón sigue siendo visible y armonioso */
+@media (prefers-color-scheme: dark) {
+  .whatsapp-float {
+    background: var(--blanco);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .whatsapp-float img {
+    filter: brightness(1.2) drop-shadow(0 0 2px rgba(255,255,255,0.3));
+  }
+}
+
+/* Botón scroll top */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 90px; /* Suficiente separación del botón de WhatsApp */
+  right: 20px;
+  background: var(--primario);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 1.4rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  z-index: 998;
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .catalogo {
+    grid-template-columns: 1fr 1fr;
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-container img {
+    width: 90px;
+  }
+
+  .typing-text {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .catalogo {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
+  }
+}
+
+/* Hero mejorado */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, var(--primario), var(--secundario));
+  color: white;
+  text-align: center;
+  padding: 4rem 1rem 3rem;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+/* Círculo decorativo pulsante */
+.hero .circle-effect {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: pulse 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+}
+
+/* Contenedor del logo */
+.logo-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* Logo flotante */
+.logo-container img {
+  width: 140px;
+  max-width: 80vw;
+  border-radius: 50%;
+  background: white;
+  padding: 0.5rem;
+  animation: float 3s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Texto animado */
+.typing-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.4rem;
+  margin-top: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  width: 0;
+  animation: typing 4s steps(40, end) forwards, blink 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Responsive mejorado */
+@media (max-width: 480px) {
+  .logo-container img {
+    width: 100px;
+  }
+
+  .typing-text {
+    font-size: 1.5rem;
+  }
+}
