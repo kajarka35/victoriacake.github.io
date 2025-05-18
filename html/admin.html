@@ -401,11 +401,17 @@
       cargarProductos();
     });
 
-    logoutBtn.addEventListener('click', async () => {
-      await signOut(auth);
-      mostrarToast('🚪 Cerrando sesión...');
-      setTimeout(() => window.location.href = 'index.html', 1500);
-    });
+   logoutBtn.addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    mostrarToast('🚪 Cerrando sesión...');
+    setTimeout(() => window.location.href = '../index.html', 1500);
+  } catch (error) {
+    console.error('Error al cerrar sesión:', error);
+    mostrarToast('❌ Error al cerrar sesión');
+  }
+});
+
 
     onAuthStateChanged(auth, async user => {
       if (!user) return window.location.href = 'index.html';
