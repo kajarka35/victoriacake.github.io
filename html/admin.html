@@ -798,12 +798,14 @@
         };
 
         const cargarProductos = async () => {
-            const criterio = ordenarSelect.value;
-            const q = query(collection(db, 'productos'), orderBy(criterio === 'creado' ? 'creado' : 'nombre'));
-            const snapshot = await getDocs(q);
-            productosCache = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            filtrarYRenderizar();
-        };
+  const criterio = ordenarSelect.value;
+  const q = query(collection(db, 'productos'), orderBy(criterio === 'creado' ? 'creado' : 'nombre'));
+  const snapshot = await getDocs(q);
+  productosCache = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  buscarInput.value = ''; // ✅ limpiar búsqueda antes de filtrar
+  filtrarYRenderizar();
+};
+
 
         const filtrarYRenderizar = () => {
             const filtro = buscarInput.value.toLowerCase();
