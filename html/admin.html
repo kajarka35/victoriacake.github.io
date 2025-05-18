@@ -1,7 +1,5 @@
-<!-- File: admin.html -->
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,237 +7,14 @@
   <link rel="stylesheet" href="../css/styles_dark_optimizado.css">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primario: #f48fb1;
-      --secundario: #ce93d8;
-      --resaltado: #f06292;
-      --texto: #4a148c;
-      --fondo: #fff8f9;
-      --blanco: #ffffff;
-      --sombra: 0 12px 28px rgba(0, 0, 0, 0.08);
-      --glass-bg: rgba(255, 255, 255, 0.6);
-      --glass-blur: blur(14px);
-      --borde-suave: rgba(255, 255, 255, 0.25);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --fondo: #1a1a1a;
-        --texto: #fce4ec;
-        --blanco: #2a2a2a;
-        --glass-bg: rgba(35, 35, 35, 0.5);
-        --borde-suave: rgba(255, 255, 255, 0.05);
-        --sombra: 0 8px 24px rgba(255, 255, 255, 0.04);
-      }
-    }
-
-    body {
-      font-family: 'Quicksand', sans-serif;
-      background-color: var(--fondo);
-      color: var(--texto);
-      margin: 0;
-      padding: 1rem;
-      line-height: 1.6;
-      transition: background 0.4s ease, color 0.4s ease;
-    }
-
-    header {
-      background: linear-gradient(135deg, var(--primario), var(--secundario));
-      color: white;
-      text-align: center;
-      padding: 2rem;
-      border-bottom-left-radius: 2rem;
-      border-bottom-right-radius: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: var(--sombra);
-      position: relative;
-    }
-
-    header h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.5rem;
-      margin: 0;
-    }
-
-    #logout-container {
-      position: absolute;
-      top: 1rem;
-      right: 2rem;
-    }
-
-    #logout-container button {
-      background: var(--resaltado);
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-left: 0.5rem;
-    }
-
-    #logout-container button:hover {
-      background: #ec407a;
-    }
-
-    #toast {
-      position: fixed;
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--texto);
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      font-weight: bold;
-      box-shadow: var(--sombra);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.5s ease;
-      z-index: 1000;
-    }
-
-    #toast.mostrar {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(-50%) translateY(-10px);
-    }
-
-    #controles {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      max-width: 1200px;
-      margin: 0 auto 2rem;
-    }
-
-    #controles input,
-    #controles select,
-    #controles button {
-      padding: 0.6rem 1rem;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: 1px solid var(--borde-suave);
-      background: var(--glass-bg);
-      color: var(--texto);
-      backdrop-filter: var(--glass-blur);
-      transition: all 0.3s ease;
-    }
-
-    #controles button:hover {
-      background: var(--resaltado);
-      color: #fff;
-    }
-
-    #formulario-producto {
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: var(--glass-bg);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: var(--sombra);
-    }
-
-    #formulario-producto input,
-    #formulario-producto button {
-      font-size: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--borde-suave);
-      background: var(--blanco);
-      color: var(--texto);
-    }
-
-    #formulario-producto button[type="submit"] {
-      background: var(--resaltado);
-      color: #fff;
-      font-weight: bold;
-    }
-
-    #productos-lista.grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    #productos-lista.lista {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .producto-card {
-      background: var(--glass-bg);
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: var(--sombra);
-      transition: transform 0.3s ease;
-      animation: fadeInUp 0.6s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .producto-card.lista {
-      flex-direction: row;
-      text-align: left;
-      gap: 2rem;
-      padding: 1rem;
-    }
-
-    .producto-card img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-    }
-
-    .producto-card.lista img {
-      width: 160px;
-      height: 160px;
-      margin-bottom: 0;
-      flex-shrink: 0;
-    }
-
-    .producto-card:hover img {
-      transform: scale(1.04);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
-    }
-
-    .acciones {
-      margin-top: 1rem;
-    }
-
-    .acciones button {
-      margin: 0.3rem;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 8px;
-      background: var(--resaltado);
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .acciones button:hover {
-      background: #ec407a;
-    }
-  </style>
+  <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
 </head>
 <body>
   <header>
     <h1>Panel de Administración Victoria Cake</h1>
     <div id="logout-container">
-      <button id="cerrar-sesion" onclick="location.href='../index.html'">🚪 Cerrar sesión</button>
-      <button onclick="location.href='../index.html'">🏠 Inicio</button>
+      <button id="cerrar-sesion">🚪 Cerrar sesión</button>
+      <button onclick="location.href='index.html'">🏠 Inicio</button>
     </div>
   </header>
 
@@ -256,7 +31,9 @@
     <input type="text" id="nombre" placeholder="Nombre del producto" required>
     <input type="text" id="descripcion" placeholder="Descripción" required>
     <input type="number" id="precio" placeholder="Precio" required>
-    <input type="url" id="imagen" placeholder="URL de imagen" required>
+    <input type="url" id="imagen" placeholder="URL de imagen" required readonly>
+    <button type="button" id="subir-imagen-cloudinary">📷 Subir Imagen</button>
+    <img id="preview" src="" alt="Vista previa" style="display:none; max-width:100%; margin-top:10px; border-radius:12px;" />
     <button type="submit">📦 Guardar producto</button>
     <button type="button" id="cancelar-edicion" style="display:none">❌ Cancelar edición</button>
   </form>
@@ -282,7 +59,8 @@
     const cancelarBtn = document.getElementById('cancelar-edicion');
     const logoutBtn = document.getElementById('cerrar-sesion');
     const toast = document.getElementById('toast');
-    const adminPanel = document.getElementById('admin-panel');
+    const inputUrl = document.getElementById("imagen");
+    const preview = document.getElementById("preview");
 
     let vista = localStorage.getItem('vista') || 'grid';
     ordenarSelect.value = localStorage.getItem('orden') || 'nombre';
@@ -338,6 +116,8 @@
             form.descripcion.value = prod.descripcion;
             form.precio.value = prod.precio;
             form.imagen.value = prod.imagen;
+            preview.src = prod.imagen;
+            preview.style.display = 'block';
             editandoId = prod.id;
             cancelarBtn.style.display = 'inline-block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -356,9 +136,7 @@
 
     const filtrarYRenderizar = () => {
       const filtro = buscarInput.value.toLowerCase();
-      const filtrados = productosCache.filter(p =>
-        p.nombre.toLowerCase().includes(filtro)
-      );
+      const filtrados = productosCache.filter(p => p.nombre.toLowerCase().includes(filtro));
       render(filtrados);
     };
 
@@ -373,21 +151,29 @@
       aplicarVista();
       filtrarYRenderizar();
     });
+
     cancelarBtn.addEventListener('click', () => {
       form.reset();
+      preview.style.display = 'none';
       editandoId = null;
       cancelarBtn.style.display = 'none';
     });
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
+      const imagenUrl = inputUrl.value.trim();
+
+      if (!imagenUrl) return mostrarToast("⚠️ Por favor sube una imagen del producto.");
+      if (!imagenUrl.startsWith("https://res.cloudinary.com/")) return mostrarToast("⚠️ La imagen debe ser subida a través de Cloudinary.");
+
       const data = {
         nombre: form.nombre.value.trim(),
         descripcion: form.descripcion.value.trim(),
         precio: parseFloat(form.precio.value),
-        imagen: form.imagen.value.trim(),
+        imagen: imagenUrl,
         creado: new Date()
       };
+
       if (editandoId) {
         await updateDoc(doc(db, 'productos', editandoId), data);
         editandoId = null;
@@ -397,22 +183,17 @@
         await addDoc(collection(db, 'productos'), data);
         mostrarToast('✅ Producto agregado');
       }
+
       form.reset();
+      preview.style.display = 'none';
       cargarProductos();
     });
 
-logoutBtn.addEventListener('click', async () => {
-  try {
-    await signOut(auth);
-    mostrarToast('🚪 Cerrando sesión...');
-    setTimeout(() => window.location.href = '/victoriacake.github.io/index.html', 1500);
-  } catch (error) {
-    console.error('Error al cerrar sesión:', error);
-    mostrarToast('❌ Error al cerrar sesión');
-  }
-});
-
-
+    logoutBtn.addEventListener('click', async () => {
+      await signOut(auth);
+      mostrarToast('🚪 Cerrando sesión...');
+      setTimeout(() => window.location.href = 'index.html', 1500);
+    });
 
     onAuthStateChanged(auth, async user => {
       if (!user) return window.location.href = 'index.html';
@@ -425,7 +206,26 @@ logoutBtn.addEventListener('click', async () => {
         cargarProductos();
       }
     });
+
+    const cloudinaryWidget = cloudinary.createUploadWidget({
+      cloudName: 'dmcxjdh7s',
+      uploadPreset: 'ml_default'
+    }, (error, result) => {
+      if (error) {
+        console.error("❌ Error en widget Cloudinary:", error);
+      }
+      if (result && result.event === "success") {
+        const url = result.info.secure_url;
+        inputUrl.value = url;
+        preview.src = url;
+        preview.style.display = 'block';
+        mostrarToast('📸 Imagen cargada con éxito');
+      }
+    });
+
+    document.getElementById("subir-imagen-cloudinary").addEventListener("click", () => {
+      cloudinaryWidget.open();
+    });
   </script>
 </body>
-
 </html>
